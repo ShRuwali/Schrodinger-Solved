@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+ \geometry{left=0.5in,top=0.5in,right=0.5in,bottom=1in}
+\begin{document}
+\begin{center}{\Huge \bf Computational calculation of energy eigenvalues of Full and Half-harmonic  Oscillator} \end{center}\\
+\vspace*{0.5cm}{\huge \bf 1 Introduction} \\ \par
+\Large The Schrodinger equation is one of the most important equation ever created which helps in finding the wave function of a quantum particle in a given potential. The wave function can then be operated by various quantum mechanical operator such as position operator, momentum operator etc. from which information about the particle can be obtained. One of the most important application of the Schrodinger equation is in finding the wave function of an electron in a Coulomb potential. The resulting wave function has helped in understanding the atomic structure of the hydrogen atom. \par
+
+The Schrodinger equation is a second order linear differential equation. The time dependent Schrodinger equation is given as follows:
+\begin{equation}
+-\frac{\hbar^2}{2m}\frac{\partial^2 \psi(x,t)}{\partial x^2} +V(x,t)\psi(x,t) = i\hbar \frac{\partial \psi(x,t)}{\partial t}
+\end{equation}
+where,\\
+$\psi$ (x,t) is the wave function of the particle which in this case evolves with respect to time.
+V(x,t) is the potential the particle is in which in this case is also evolving with respect to time \par
+If the potential is not dependent on time then the wave function is stationary and does not evolve in time. In that case, the Schrodinger equation is given as:
+\begin{equation}
+-\frac{\hbar^2}{2m}\frac{d^2 \psi(x)}{d x^2} +V(x)\psi(x) = E \psi
+\end{equation}
+this is the time independent Schrodinger equation where $\psi$ and V are both constant in time. \par
+While the Schrodinger is a very important equation, the solution of this second order linear differential equation however is very challenging. If the potential the particle is in is some complicated function, then the challenge even grows further. This challenge however can be overcomed using computational techniques. Below is explained how the eigenvalues of a particle in a given potential can be simplified using computational technique. \\\\\\\\\\\
+{\huge \bf 2 Theory}\\\\
+We first take the Schrodinger equation:
+\begin{equation*}
+-\frac{\hbar^2}{2m}\frac{d^2 \psi(x)}{d x^2} +V(x)\psi(x) = E \psi(x) \
+\end{equation*}
+for the full-harmonic oscillator, the potential is given as:
+\(V(x)=\frac{1}{2}kx^2\)
+and we write the wave function as the sum of orthogonal wave function:
+$\psi(x)=\sum_{n=0}^{N} c_{n}g_{n}(x)$\\
+Substituting,
+\begin{flalign}
+&-\frac{\hbar^2}{2m}\frac{d^2}{dx}(\sum_{n=0}^{N}c_{n}g_{n}(x)) +\frac{1}{2}m\omega^2 x^2\sum_{n=0}^{N}c_{n}g_{n}(x)=E\sum_{n=0}^{N}c_{n}g_{n}(x)&& \nonumber
+\end{flalign}
+Multiplying with $g_m(x)$ on both sides and integrating,
+\begin{flalign}
+&\sum_{n=0}^{N}c_n \biggl[ \underbrace{\int_{-\infty}^{\infty}-\frac{\hbar^2}{2m}g_m(x)\frac{d^2}{dx}g_n(x)dx}_\text{ Use integration by parts }+\int_{-\infty}^{\infty}g_m(x)\left(\frac{1}{2}m\omega^2 x^2\right )g_n(x)dx \biggr]&& \nonumber
+\end{flalign}
+\hspace*{50ex}$=E\sum_{n=0}^{N}c_n \int_{-\infty}^{\infty}g_m(x)g_n(x)dx$
+
+\begin{flalign}
+i.e. &\sum_{n=0}^{N} c_n\biggl[\underbrace{\frac{\hbar^2}{2m}\int_{-\infty}^{\infty}\biggl(\frac{dg_m(x)}{dx} \frac{dg_n(x)}{dx} \biggr]dx}_\text{$A_{mn}$} +\underbrace{\int_{-\infty}^{\infty}g_m(x)\left(\frac{1}{2}m\omega ^2 x^2 \right )g_n(x)dx}_\text{$B_{mn}$}\biggr]&&  \nonumber
+\end{flalign}
+\hspace*{50ex}$=E\sum_{n=0}^{N}c_n \underbrace{\int_{-\infty}^{\infty}g_m(x)g_n(x)dx}_\text{$D_{mn}$}$
+
+\begin{equation*}
+i.e. \sum_{m=0}^{N}\sum_{n=0}^{N}F_{mn}c_n=E\sum_{n=0}^{N}D_{mn}c_n
+\end{equation*}
+where,\\
+\begin{flalign}
+&F_{mn}=\frac{\hbar^2}{2m}\left (\int_{-\infty}^{\infty}\frac{dg_m(x)}{dx}\frac{dg_n(x)}{dx}\right )dx+\int_{-\infty}^{\infty}g_m(x)\left (\frac{1}{2}m\omega ^2 x^2 \right )g_n(x)dx && \nonumber
+\end{flalign}\\
+and,\\
+\begin{flalign}
+&D_{mn}=\int_{-\infty}^{\infty}g_m(x)g_n(x)dx=\delta _{mn}&& \nonumber
+\end{flalign}
+we get,
+\begin{equation*}
+\sum_{m=0}^{N}\sum_{n=0}^{N}F_{mn}c_n=Ec_n
+\end{equation*}
+Let N=2, then\\
+\begin{align*} 
+F_{00}c_0+F_{01}c_1+F_{02}c_2&=Ec_0\\
+F_{10}c_0+F_{11}c_1+F_{12}c_2&=Ec_1\\
+F_{20}c_0+F_{21}c_1+F_{22}c_2&=Ec_2
+\end{align*}
+in matrix form,
+\begin{gather}
+\begin{bmatrix} F_{00}&F_{01}&F_{02}\\F_{10}&F{11}&F_{12}\\F_{20}&F{21}&F_{22}
+\end{bmatrix}
+\begin{bmatrix} c_0 \\ c_1 \\c_2 \end{bmatrix}
+=E\begin{bmatrix} c_0 \\ c_1 \\c_2 \end{bmatrix} \nonumber
+\end{gather} 
+Solving the eigenvalue equation for E yields three values of E, which are the eigenvalues of the particle in a given potential. Increasing the value of N yields larger number of eigenvalues.\\\\
+{\huge \bf 3 Numerical differiantion}\\ \par
+For the first order derivative, we use the two point central difference formula:
+\begin{equation}
+\frac{df}{dx} \approx \frac{1}{2h}[y(x+h)-y(x-h)]
+\end{equation}
+where,
+h is the step size decided by the user.\\\\
+{\huge \bf 3 Numerical integration}\\ \par
+For the definite integration, we use the Gaussian quadrature method:
+\begin{equation}
+\int_{a}^{b}f(y)=\sum_{i=0}^{N}f(y_i)w_i(\frac{b-a}{2})\end{equation}\\
+where,\\
+\begin{flalign}
+&y_i=(\frac{b-a}{2})x_i+(\frac{b+a}{2})&& \nonumber
+\end{flalign} 
+The weights $w_i$ are calculated as:
+\begin{equation*}
+w_i=\frac{2}{(1-x_i^2)[P_n'(x_i)]^2}
+\end{equation*}
+where,
+$x_i$ is the root of the nth order Legendre Polynomial and $P_n'(x)$ is the $n^{th}$ order derivative of the Legendre Polynomial calculated as using the following recursion relation:
+\begin{equation}
+P_{n+1}(x)=\frac{1}{n+1}[(2n+1)xP_n(x)-nP_{n-1}(x)]
+\end{equation}\\
+where, 
+$P_0(x)$=0, $P_1(x)$=x\\ 
+The derivative of the Legendre Polynomial is then calculated as:
+\begin{equation}
+P_n'(x)=\left (\frac{n+1}{1-x^2}\right )[xP_n(x)-P_{n+1}x]
+\end{equation}
+Using this method, $A_{mn}$ can be calculated as:
+\begin{equation*}
+\begin{split}
+A_{mn}&=\int_{-\infty}^{\infty}\left (\frac{dg_m}{dx} \right ) \left (\frac{dg_n}{dx} \right )dx \\
+&=\sum_{i=0}^{N}g_m'(x_i)g_n'(x_i)w_i \left (\frac{b-a}{2} \right )
+\end{split}
+\end{equation*}\nonumber \\\\
+{\huge \bf 4 Full Harmonic Oscillator}\\ \par
+
+\begin{wrapfigure}{r}{0.25\textwidth}
+\includegraphics[width=0.25\textwidth]{FHO}
+\caption{Potential of a full harmonic oscillator}
+\end{wrapfigure}Now that we know how to construct the matrix, find the derivative and integration of the wave function, lets consider a quantum particle in the potential:$V(x)=\frac{1}{2}m\omega^2 x^2$ and we let $\hbar$=1, $\omega$=1 and m=1 The figure alongside shows the potential the particle is in. In order to solve the eigenvalues of the particle, the orthogonal wave function we are going to be considering will be the Hermite polynomials i.e. $g_n(x)=A_nH_n(x) e^{-x^2/2}$, where $A_n$ is the constant coefficient of the Hermite polynomial given as:$A_n$=$\frac{1}{\pi^{1/4}\sqrt{2^n n!}}$ and $H_n(x)$ is the $n^{th}$ order Hermite polynomial. The recursion relation of the Hermite polynomial is given as:
+\begin{equation*}
+H_{n+1}(x)=2xH_n(x)-2nH_{n-1}(x)
+\end{equation*}
+where,
+$H_0$= 1, $H_1$=2x\\
+From the recursion relation, further polynomials can be easily calculated.\\\\
+{\huge \bf 5 Half Harmonic Oscillator}\\ \par
+\begin{wrapfigure}{r}{0.25\textwidth}
+\includegraphics[width=0.25\textwidth]{HHO}
+\caption{Potential of a half harmonic oscillator}
+\end{wrapfigure} In order to find the eigenvalues of the half harmonic oscillator we consider different orthogonal functions:
+\begin{equation*}
+g_n(x)=\sqrt{\frac{2}{a}}\sin \left (\frac{n\pi x}{a} \right ) 
+\end{equation*}
+This orthogonal function can actually calculate the eigenvalues of the both the full-harmonic oscillator and the half-harmonic oscillator depending on where the potential has been placed. Thus there are two new parameters that are added in the code-"a" and "sh". "a" refers to the width of the potential and "sh" refers to the location where the potential is to be placed. If the potential is placed in the middle of the integration region, the calculation will yield the eigenvalues of full-harmonic oscillator whereas if the potential is placed such that it originates from the initial value of the integration, it will yield the eigenvalues of the half-harmonic oscillator. 
+\rule{19.2cm}{0.1cm}
+{\bf Note:} I don't own the numerical derivation as presented which I received as a class note. I translated the theoretical calculation to computational calculation.
+\end{document}
